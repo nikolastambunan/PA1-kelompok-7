@@ -968,8 +968,6 @@ h1, h2, h3, h4, h5, h6, .page-title, .section-title, .navbar-brand {
 
             {{-- LOGO --}}
             <a class="logo-wrapper" href="{{ url('/') }}">
-                <img src="{{ asset('image/logo/logobankindonesia.jpg') }}" alt="Bank Indonesia" class="logo-img" loading="lazy">
-                <div class="logo-divider"></div>
                 <img src="{{ asset('image/logo/del.jpg') }}" alt="Logo Del" class="logo-img" loading="lazy">
                 <div class="logo-divider"></div>
                 <span class="navbar-brand">Geo<span>Toba</span></span>
@@ -1088,7 +1086,6 @@ h1, h2, h3, h4, h5, h6, .page-title, .section-title, .navbar-brand {
                 <!-- Brand Column -->
                 <div class="footer-brand">
                     <div class="logo-footer">
-                        <img src="{{ asset('image/logo/logobankindonesia.jpg') }}" alt="Bank Indonesia" class="logo-footer-img" loading="lazy">
                         <img src="{{ asset('image/logo/del.jpg') }}" alt="Logo Del" class="logo-footer-img" loading="lazy">
                     </div>
                     <h4>Geo<span>Toba</span></h4>
