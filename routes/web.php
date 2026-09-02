@@ -303,6 +303,4 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
 
 Route::get('/debug-lang', function() { return 'Locale: ' . app()->getLocale() . ' Session: ' . session('locale'); });
 
-
-
-
+Route::post('/api/chat', [App\Http\Controllers\ChatController::class, 'sendMessage']);

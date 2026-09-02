@@ -1485,6 +1485,299 @@ h1, h2, h3, h4, h5, h6, .page-title, .section-title, .navbar-brand {
     }
     </script>
 
+    <!-- AI Chatbot Widget -->
+    <div id="ai-chat-widget" class="ai-chat-widget">
+        <div id="ai-chat-box" class="ai-chat-box" style="display: none;">
+            <div class="ai-chat-header" id="ai-chat-header">
+                <div><i class="fas fa-robot"></i> Asisten Toba</div>
+                <button id="ai-chat-close"><i class="fas fa-times"></i></button>
+            </div>
+            <div id="ai-chat-messages" class="ai-chat-messages">
+                <div class="ai-chat-msg ai-msg">Halo! Saya asisten AI untuk wisata Balige-Meat-Liang Sipege-Batu Basiha. Ada yang bisa saya bantu?</div>
+            </div>
+            <div class="ai-chat-input-area">
+                <input type="text" id="ai-chat-input" placeholder="Tanya seputar wisata...">
+                <button id="ai-chat-send"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+        <button id="ai-chat-toggle" class="ai-chat-toggle">
+            <i class="fas fa-robot"></i>
+        </button>
+    </div>
+
+    <style>
+        .ai-chat-widget {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 9999;
+            font-family: 'Poppins', sans-serif;
+        }
+        .ai-chat-toggle {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: #0d6efd;
+            color: white;
+            border: none;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            font-size: 28px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .ai-chat-toggle:hover {
+            transform: scale(1.1);
+        }
+        .ai-chat-box {
+            width: 350px;
+            height: 450px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: absolute;
+            bottom: 80px;
+            right: 0;
+            border: 1px solid #ddd;
+        }
+        .ai-chat-header {
+            background: #0d6efd;
+            color: white;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            cursor: move; /* Indicate draggable */
+            user-select: none;
+        }
+        .ai-chat-header button {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+        }
+        .ai-chat-messages {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+            background: #f8f9fa;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .ai-chat-msg {
+            max-width: 85%;
+            padding: 10px 15px;
+            border-radius: 15px;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+        .ai-msg {
+            background: #e9ecef;
+            color: #333;
+            align-self: flex-start;
+            border-bottom-left-radius: 0;
+        }
+        .user-msg {
+            background: #0d6efd;
+            color: white;
+            align-self: flex-end;
+            border-bottom-right-radius: 0;
+        }
+        .ai-chat-input-area {
+            display: flex;
+            padding: 10px;
+            background: white;
+            border-top: 1px solid #ddd;
+        }
+        .ai-chat-input-area input {
+            flex: 1;
+            padding: 10px 15px;
+            border: 1px solid #ccc;
+            border-radius: 20px;
+            outline: none;
+            font-size: 14px;
+        }
+        .ai-chat-input-area button {
+            background: #0d6efd;
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-left: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        @media (max-width: 576px) {
+            .ai-chat-box {
+                width: calc(100vw - 40px);
+                position: fixed;
+                bottom: 90px;
+                right: 20px;
+                left: auto;
+                top: auto;
+            }
+            .ai-chat-header {
+                cursor: default;
+            }
+        }
+    </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const chatWidget = document.getElementById('ai-chat-widget');
+            const chatToggle = document.getElementById('ai-chat-toggle');
+            const chatBox = document.getElementById('ai-chat-box');
+            const chatClose = document.getElementById('ai-chat-close');
+            const chatInput = document.getElementById('ai-chat-input');
+            const chatSend = document.getElementById('ai-chat-send');
+            const chatMessages = document.getElementById('ai-chat-messages');
+            const chatHeader = document.getElementById('ai-chat-header');
+
+            if (!chatToggle) return;
+
+            // Toggle functionality
+            chatToggle.addEventListener('click', () => {
+                chatBox.style.display = chatBox.style.display === 'none' ? 'flex' : 'none';
+                if(chatBox.style.display === 'flex') chatInput.focus();
+            });
+
+            chatClose.addEventListener('click', () => {
+                chatBox.style.display = 'none';
+            });
+
+            // Draggable functionality
+            let isDragging = false;
+            let currentX;
+            let currentY;
+            let initialX;
+            let initialY;
+            let xOffset = 0;
+            let yOffset = 0;
+
+            chatHeader.addEventListener('mousedown', dragStart);
+            document.addEventListener('mousemove', drag);
+            document.addEventListener('mouseup', dragEnd);
+            
+            // Touch support for mobile dragging
+            chatHeader.addEventListener('touchstart', dragStart, {passive: true});
+            document.addEventListener('touchmove', drag, {passive: false});
+            document.addEventListener('touchend', dragEnd);
+
+            function dragStart(e) {
+                if (window.innerWidth <= 576) return; // Disable drag on very small screens
+                
+                if (e.type === 'touchstart') {
+                    initialX = e.touches[0].clientX - xOffset;
+                    initialY = e.touches[0].clientY - yOffset;
+                } else {
+                    initialX = e.clientX - xOffset;
+                    initialY = e.clientY - yOffset;
+                }
+                
+                if (e.target === chatHeader || chatHeader.contains(e.target)) {
+                    isDragging = true;
+                }
+            }
+
+            function dragEnd(e) {
+                initialX = currentX;
+                initialY = currentY;
+                isDragging = false;
+            }
+
+            function drag(e) {
+                if (isDragging) {
+                    e.preventDefault();
+                    
+                    if (e.type === 'touchmove') {
+                        currentX = e.touches[0].clientX - initialX;
+                        currentY = e.touches[0].clientY - initialY;
+                    } else {
+                        currentX = e.clientX - initialX;
+                        currentY = e.clientY - initialY;
+                    }
+
+                    xOffset = currentX;
+                    yOffset = currentY;
+
+                    setTranslate(currentX, currentY, chatWidget);
+                }
+            }
+
+            function setTranslate(xPos, yPos, el) {
+                el.style.transform = "translate3d(" + xPos + "px, " + yPos + "px, 0)";
+            }
+
+            // Chat logic
+            function appendMessage(text, sender) {
+                const msgDiv = document.createElement('div');
+                msgDiv.className = 'ai-chat-msg ' + (sender === 'user' ? 'user-msg' : 'ai-msg');
+                
+                // Allow simple formatting like bold and line breaks
+                const formattedText = text.replace(/\n/g, '<br>').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+                msgDiv.innerHTML = formattedText;
+                
+                chatMessages.appendChild(msgDiv);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+
+            async function sendMessage() {
+                const text = chatInput.value.trim();
+                if (!text) return;
+                
+                appendMessage(text, 'user');
+                chatInput.value = '';
+                
+                const typingId = 'typing-' + Date.now();
+                const typingDiv = document.createElement('div');
+                typingDiv.id = typingId;
+                typingDiv.className = 'ai-chat-msg ai-msg';
+                typingDiv.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Mengetik...';
+                chatMessages.appendChild(typingDiv);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+
+                const csrfTokenMeta = document.querySelector('meta[name="csrf-token"]');
+                const token = csrfTokenMeta ? csrfTokenMeta.getAttribute('content') : '';
+
+                try {
+                    const res = await fetch('/api/chat', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': token
+                        },
+                        body: JSON.stringify({ message: text })
+                    });
+                    
+                    const data = await res.json();
+                    document.getElementById(typingId).remove();
+                    appendMessage(data.reply, 'ai');
+                } catch(e) {
+                    if (document.getElementById(typingId)) {
+                        document.getElementById(typingId).remove();
+                    }
+                    appendMessage('Maaf, terjadi kesalahan. Silakan hubungi admin di WhatsApp 081260000492.', 'ai');
+                }
+            }
+
+            chatSend.addEventListener('click', sendMessage);
+            chatInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') sendMessage();
+            });
+        });
+    </script>
+
     @stack('scripts')
 </body>
 </html>
