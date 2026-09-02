@@ -891,7 +891,7 @@
         .lang-switcher-widget {
             position: fixed;
             bottom: 28px;
-            right: 28px;
+            left: 28px;
             z-index: 9999;
             display: flex;
             align-items: center;
@@ -944,7 +944,7 @@
         }
 
         @media (max-width: 768px) {
-            .lang-switcher-widget { bottom: 16px; right: 16px; }
+            .lang-switcher-widget { bottom: 16px; left: 16px; }
             .lang-btn { padding: 6px 12px; min-width: 40px; }
             .lang-code { font-size: 0.75rem; }
         }
@@ -1482,296 +1482,601 @@ h1, h2, h3, h4, h5, h6, .page-title, .section-title, .navbar-brand {
     }
     </script>
 
-    <!-- AI Chatbot Widget -->
+    <!-- ===== AI CHATBOT WIDGET PREMIUM ===== -->
     <div id="ai-chat-widget" class="ai-chat-widget">
-        <div id="ai-chat-box" class="ai-chat-box" style="display: none;">
+
+        <!-- CHAT BOX -->
+        <div id="ai-chat-box" class="ai-chat-box" style="display:none;">
+
+            <!-- HEADER -->
             <div class="ai-chat-header" id="ai-chat-header">
-                <div><i class="fas fa-robot"></i> Asisten Toba</div>
-                <button id="ai-chat-close"><i class="fas fa-times"></i></button>
+                <div class="ai-header-bg"></div>
+                <div class="ai-header-content">
+                    <div class="ai-avatar-wrap">
+                        <div class="ai-avatar-ring"></div>
+                        <div class="ai-avatar-inner">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <span class="ai-online-dot"></span>
+                    </div>
+                    <div class="ai-header-text">
+                        <div class="ai-bot-name">Asisten Toba <span class="ai-bot-badge">AI</span></div>
+                        <div class="ai-bot-status"><span class="ai-blink">●</span> Online · Siap membantu</div>
+                    </div>
+                </div>
+                <div class="ai-header-actions">
+                    <button id="ai-chat-close" class="ai-close-btn" title="Tutup">
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                </div>
             </div>
+
+            <!-- MESSAGES -->
             <div id="ai-chat-messages" class="ai-chat-messages">
-                <div class="ai-chat-msg ai-msg">Halo! Saya asisten AI untuk wisata Balige-Meat-Liang Sipege-Batu Basiha. Ada yang bisa saya bantu?</div>
+                <div class="ai-date-pill"><span>Hari ini</span></div>
+                <div class="ai-msg-row">
+                    <div class="ai-msg-avatar"><i class="fas fa-robot"></i></div>
+                    <div class="ai-msg-col">
+                        <div class="ai-bubble">
+                            👋 Halo! Saya <strong>Asisten Toba</strong>, asisten cerdas untuk wisata <strong>Balige–Meat–Liang Sipege–Batu Basiha</strong>.<br><br>Ada yang ingin kamu tanyakan?
+                        </div>
+                        <div class="ai-chip-row">
+                            <button class="ai-chip" onclick="useChip(this)">🗺️ Destinasi wisata</button>
+                            <button class="ai-chip" onclick="useChip(this)">🏨 Akomodasi</button>
+                            <button class="ai-chip" onclick="useChip(this)">🍜 Kuliner lokal</button>
+                        </div>
+                        <div class="ai-msg-time">{{ now()->format('H:i') }}</div>
+                    </div>
+                </div>
             </div>
-            <div class="ai-chat-input-area">
-                <input type="text" id="ai-chat-input" placeholder="Tanya seputar wisata...">
-                <button id="ai-chat-send"><i class="fas fa-paper-plane"></i></button>
+
+            <!-- INPUT -->
+            <div class="ai-chat-footer">
+                <div class="ai-input-wrap">
+                    <input type="text" id="ai-chat-input" placeholder="Ketik pertanyaanmu..." autocomplete="off">
+                    <button id="ai-chat-send" class="ai-send-btn">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+                <div class="ai-powered-by">Powered by <strong>Groq AI</strong> · GeoToba</div>
             </div>
         </div>
-        <button id="ai-chat-toggle" class="ai-chat-toggle">
-            <i class="fas fa-robot"></i>
+
+        <!-- TOGGLE BUTTON -->
+        <button id="ai-chat-toggle" class="ai-chat-toggle" title="Tanya Asisten Toba">
+            <span class="ai-toggle-ripple"></span>
+            <i class="fas fa-robot ai-toggle-icon" id="chat-icon-robot"></i>
+            <i class="fas fa-times ai-toggle-icon" id="chat-icon-close" style="display:none;"></i>
         </button>
     </div>
 
     <style>
+    /* ============================================================
+       CHATBOT – CLEAR & UNAMBIGUOUS UI
+    ============================================================ */
+    .ai-chat-widget {
+        position: fixed;
+        bottom: 26px;
+        right: 26px;
+        z-index: 9999;
+        font-family: 'Inter', 'Poppins', sans-serif;
+    }
+
+    /* ----- TOGGLE BUTTON ----- */
+    .ai-chat-toggle {
+        position: relative;
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+        background: #003366; /* Solid Dark Blue */
+        color: white;
+        border: none;
+        box-shadow: 0 4px 15px rgba(0, 51, 102, 0.4);
+        font-size: 26px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: transform 0.3s ease, box-shadow 0.3s;
+    }
+    .ai-chat-toggle:hover {
+        transform: scale(1.05) translateY(-3px);
+        box-shadow: 0 8px 25px rgba(0, 51, 102, 0.5);
+    }
+    .ai-chat-toggle:active {
+        transform: scale(0.95);
+    }
+    .ai-toggle-icon { transition: all 0.2s ease; }
+
+    /* ----- CHAT BOX ----- */
+    .ai-chat-box {
+        position: absolute;
+        bottom: 80px;
+        right: 0;
+        width: 380px;
+        height: 560px;
+        background: #ffffff;
+        border-radius: 16px;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.15), 0 0 0 1px rgba(0,0,0,0.05);
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        animation: boxAppear 0.2s ease-out;
+        transform-origin: bottom right;
+    }
+    @keyframes boxAppear {
+        from { opacity: 0; transform: scale(0.9) translateY(10px); }
+        to   { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    /* ----- HEADER ----- */
+    .ai-chat-header {
+        position: relative;
+        flex-shrink: 0;
+        background: #003366; /* Solid Header */
+        color: white;
+        cursor: move;
+        user-select: none;
+        padding: 16px 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .ai-header-content {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+    .ai-avatar-wrap {
+        position: relative;
+        flex-shrink: 0;
+        width: 44px;
+        height: 44px;
+    }
+    .ai-avatar-inner {
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+        color: white;
+    }
+    .ai-online-dot {
+        position: absolute;
+        bottom: 2px;
+        right: 2px;
+        width: 12px;
+        height: 12px;
+        background: #22c55e;
+        border-radius: 50%;
+        border: 2px solid #003366;
+    }
+    .ai-bot-name {
+        color: white;
+        font-weight: 700;
+        font-size: 1.05rem;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    .ai-bot-badge {
+        background: #eab308; /* Yellow/Gold solid */
+        color: #000;
+        font-size: 0.65rem;
+        font-weight: bold;
+        padding: 2px 6px;
+        border-radius: 12px;
+    }
+    .ai-bot-status {
+        color: rgba(255, 255, 255, 0.9);
+        font-size: 0.8rem;
+        margin-top: 2px;
+    }
+    .ai-close-btn {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: transparent;
+        border: none;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background 0.2s;
+    }
+    .ai-close-btn:hover {
+        background: rgba(255,255,255,0.2);
+    }
+
+    /* ----- MESSAGES AREA ----- */
+    .ai-chat-messages {
+        flex: 1;
+        overflow-y: auto;
+        padding: 20px 16px 10px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        background: #f8fafc; /* Solid light gray background */
+        scroll-behavior: smooth;
+    }
+    .ai-chat-messages::-webkit-scrollbar { width: 6px; }
+    .ai-chat-messages::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+
+    .ai-date-pill {
+        text-align: center;
+        margin-bottom: 12px;
+    }
+    .ai-date-pill span {
+        background: #e2e8f0;
+        color: #475569;
+        font-size: 0.75rem;
+        font-weight: 600;
+        padding: 4px 12px;
+        border-radius: 20px;
+    }
+
+    /* Message rows */
+    .ai-msg-row {
+        display: flex;
+        align-items: flex-end;
+        gap: 10px;
+    }
+    .ai-msg-row.user-row {
+        flex-direction: row-reverse;
+    }
+    .ai-msg-avatar {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: #003366;
+        color: white;
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+    .ai-msg-col {
+        display: flex;
+        flex-direction: column;
+        max-width: 80%;
+    }
+    .user-row .ai-msg-col {
+        align-items: flex-end;
+    }
+
+    /* Bubbles */
+    .ai-bubble {
+        background: #ffffff;
+        color: #1e293b;
+        padding: 12px 16px;
+        border-radius: 16px 16px 16px 4px;
+        font-size: 0.9rem;
+        line-height: 1.5;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        border: 1px solid #e2e8f0;
+        word-break: break-word;
+    }
+    .user-bubble {
+        background: #003366; /* Solid dark blue */
+        color: #ffffff;
+        padding: 12px 16px;
+        border-radius: 16px 16px 4px 16px;
+        font-size: 0.9rem;
+        line-height: 1.5;
+        box-shadow: 0 1px 3px rgba(0,51,102,0.2);
+        word-break: break-word;
+    }
+    .ai-msg-time {
+        font-size: 0.7rem;
+        color: #64748b;
+        margin-top: 4px;
+        padding: 0 4px;
+    }
+    .user-row .ai-msg-time { text-align: right; }
+
+    /* Suggestion chips */
+    .ai-chip-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 10px;
+    }
+    .ai-chip {
+        background: #ffffff;
+        border: 1px solid #cbd5e1;
+        color: #003366;
+        font-size: 0.8rem;
+        font-weight: 500;
+        padding: 6px 14px;
+        border-radius: 20px;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+    .ai-chip:hover {
+        background: #f1f5f9;
+        border-color: #003366;
+        color: #003366;
+    }
+
+    /* Typing indicator */
+    .ai-typing-bubble {
+        background: #ffffff;
+        padding: 14px 20px;
+        border-radius: 16px 16px 16px 4px;
+        border: 1px solid #e2e8f0;
+        display: flex;
+        gap: 6px;
+        align-items: center;
+    }
+    .ai-typing-dot {
+        width: 8px; height: 8px;
+        background: #94a3b8;
+        border-radius: 50%;
+        animation: typingBounce 1.4s infinite ease-in-out both;
+    }
+    .ai-typing-dot:nth-child(1) { animation-delay: -0.32s; }
+    .ai-typing-dot:nth-child(2) { animation-delay: -0.16s; }
+    @keyframes typingBounce {
+        0%, 80%, 100% { transform: scale(0); }
+        40% { transform: scale(1); background: #003366; }
+    }
+
+    /* ----- FOOTER / INPUT ----- */
+    .ai-chat-footer {
+        flex-shrink: 0;
+        padding: 16px;
+        background: #ffffff;
+        border-top: 1px solid #e2e8f0;
+    }
+    .ai-input-wrap {
+        display: flex;
+        align-items: center;
+        background: #f1f5f9;
+        border: 1px solid #cbd5e1;
+        border-radius: 24px;
+        padding: 4px 6px 4px 16px;
+        gap: 10px;
+    }
+    .ai-input-wrap:focus-within {
+        border-color: #003366;
+        background: #ffffff;
+        box-shadow: 0 0 0 3px rgba(0,51,102,0.1);
+    }
+    .ai-input-wrap input {
+        flex: 1;
+        border: none;
+        outline: none;
+        background: transparent;
+        font-size: 0.95rem;
+        color: #1e293b;
+        padding: 8px 0;
+    }
+    .ai-input-wrap input::placeholder { color: #94a3b8; }
+    .ai-send-btn {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: #003366; /* Solid Blue */
+        color: white;
+        border: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        transition: background 0.2s;
+        flex-shrink: 0;
+    }
+    .ai-send-btn:hover {
+        background: #002244;
+    }
+    .ai-powered-by {
+        text-align: center;
+        font-size: 0.7rem;
+        color: #94a3b8;
+        margin-top: 10px;
+    }
+    .ai-powered-by strong { color: #64748b; }
+
+    /* ----- MOBILE FULLSCREEN ----- */
+    @media (max-width: 576px) {
         .ai-chat-widget {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 9999;
-            font-family: 'Poppins', sans-serif;
+            bottom: 0; right: 0; left: 0;
+            width: 100%;
         }
         .ai-chat-toggle {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: #0d6efd;
-            color: white;
-            border: none;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            font-size: 28px;
-            cursor: pointer;
-            transition: transform 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .ai-chat-toggle:hover {
-            transform: scale(1.1);
+            position: fixed;
+            bottom: 20px; right: 20px;
+            z-index: 10000;
         }
         .ai-chat-box {
-            width: 350px;
-            height: 450px;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.2);
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            position: absolute;
-            bottom: 80px;
-            right: 0;
-            border: 1px solid #ddd;
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            height: 100dvh;
+            border-radius: 0;
+            bottom: auto; right: auto;
+            animation: slideUp 0.3s ease-out;
+        }
+        @keyframes slideUp {
+            from { transform: translateY(100%); }
+            to   { transform: translateY(0); }
         }
         .ai-chat-header {
-            background: #0d6efd;
-            color: white;
-            padding: 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-weight: 600;
-            cursor: move; /* Indicate draggable */
-            user-select: none;
+            cursor: default;
+            padding-top: calc(16px + env(safe-area-inset-top, 0px));
         }
-        .ai-chat-header button {
-            background: none;
-            border: none;
-            color: white;
-            font-size: 18px;
-            cursor: pointer;
+        .ai-chat-footer {
+            padding-bottom: calc(16px + env(safe-area-inset-bottom, 0px));
         }
-        .ai-chat-messages {
-            flex: 1;
-            padding: 15px;
-            overflow-y: auto;
-            background: #f8f9fa;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-        .ai-chat-msg {
-            max-width: 85%;
-            padding: 10px 15px;
-            border-radius: 15px;
-            font-size: 14px;
-            line-height: 1.4;
-        }
-        .ai-msg {
-            background: #e9ecef;
-            color: #333;
-            align-self: flex-start;
-            border-bottom-left-radius: 0;
-        }
-        .user-msg {
-            background: #0d6efd;
-            color: white;
-            align-self: flex-end;
-            border-bottom-right-radius: 0;
-        }
-        .ai-chat-input-area {
-            display: flex;
-            padding: 10px;
-            background: white;
-            border-top: 1px solid #ddd;
-        }
-        .ai-chat-input-area input {
-            flex: 1;
-            padding: 10px 15px;
-            border: 1px solid #ccc;
-            border-radius: 20px;
-            outline: none;
-            font-size: 14px;
-        }
-        .ai-chat-input-area button {
-            background: #0d6efd;
-            color: white;
-            border: none;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            margin-left: 10px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        @media (max-width: 576px) {
-            .ai-chat-box {
-                width: calc(100vw - 40px);
-                position: fixed;
-                bottom: 90px;
-                right: 20px;
-                left: auto;
-                top: auto;
-            }
-            .ai-chat-header {
-                cursor: default;
-            }
-        }
+        .ai-chat-input-area input { font-size: 16px; }
+        .ai-msg-col { max-width: 88%; }
+    }
     </style>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const chatWidget = document.getElementById('ai-chat-widget');
-            const chatToggle = document.getElementById('ai-chat-toggle');
-            const chatBox = document.getElementById('ai-chat-box');
-            const chatClose = document.getElementById('ai-chat-close');
-            const chatInput = document.getElementById('ai-chat-input');
-            const chatSend = document.getElementById('ai-chat-send');
-            const chatMessages = document.getElementById('ai-chat-messages');
-            const chatHeader = document.getElementById('ai-chat-header');
+            const chatToggle  = document.getElementById('ai-chat-toggle');
+            const chatBox     = document.getElementById('ai-chat-box');
+            const chatClose   = document.getElementById('ai-chat-close');
+            const chatInput   = document.getElementById('ai-chat-input');
+            const chatSend    = document.getElementById('ai-chat-send');
+            const chatMessages= document.getElementById('ai-chat-messages');
+            const chatHeader  = document.getElementById('ai-chat-header');
+            const iconRobot   = document.getElementById('chat-icon-robot');
+            const iconClose   = document.getElementById('chat-icon-close');
+            const chatWidget  = document.getElementById('ai-chat-widget');
 
             if (!chatToggle) return;
 
-            // Toggle functionality
+            // Toggle open/close
             chatToggle.addEventListener('click', () => {
-                chatBox.style.display = chatBox.style.display === 'none' ? 'flex' : 'none';
-                if(chatBox.style.display === 'flex') chatInput.focus();
+                const isOpen = chatBox.style.display !== 'none' && chatBox.style.display !== '';
+                if (isOpen) {
+                    chatBox.style.display = 'none';
+                    iconRobot.style.display = 'flex';
+                    iconClose.style.display = 'none';
+                } else {
+                    chatBox.style.display = 'flex';
+                    iconRobot.style.display = 'none';
+                    iconClose.style.display = 'flex';
+                    setTimeout(() => chatInput.focus(), 300);
+                }
             });
 
             chatClose.addEventListener('click', () => {
                 chatBox.style.display = 'none';
+                iconRobot.style.display = 'flex';
+                iconClose.style.display = 'none';
             });
 
-            // Draggable functionality
-            let isDragging = false;
-            let currentX;
-            let currentY;
-            let initialX;
-            let initialY;
-            let xOffset = 0;
-            let yOffset = 0;
+            // Chip handler
+            window.useChip = function(btn) {
+                chatInput.value = btn.textContent.replace(/^[^\w]+/, '').trim();
+                // Hide all chips after click
+                document.querySelectorAll('.ai-chip-row').forEach(r => r.style.display = 'none');
+                sendMessage();
+            };
 
+            // Draggable (desktop only)
+            let isDragging = false, currentX, currentY, initialX, initialY, xOffset = 0, yOffset = 0;
             chatHeader.addEventListener('mousedown', dragStart);
             document.addEventListener('mousemove', drag);
             document.addEventListener('mouseup', dragEnd);
-            
-            // Touch support for mobile dragging
-            chatHeader.addEventListener('touchstart', dragStart, {passive: true});
-            document.addEventListener('touchmove', drag, {passive: false});
-            document.addEventListener('touchend', dragEnd);
 
             function dragStart(e) {
-                if (window.innerWidth <= 576) return; // Disable drag on very small screens
-                
-                if (e.type === 'touchstart') {
-                    initialX = e.touches[0].clientX - xOffset;
-                    initialY = e.touches[0].clientY - yOffset;
-                } else {
-                    initialX = e.clientX - xOffset;
-                    initialY = e.clientY - yOffset;
-                }
-                
-                if (e.target === chatHeader || chatHeader.contains(e.target)) {
-                    isDragging = true;
-                }
+                if (window.innerWidth <= 576) return;
+                initialX = e.clientX - xOffset;
+                initialY = e.clientY - yOffset;
+                if (chatHeader.contains(e.target)) isDragging = true;
             }
-
-            function dragEnd(e) {
-                initialX = currentX;
-                initialY = currentY;
-                isDragging = false;
+            function dragEnd() {
+                initialX = currentX; initialY = currentY; isDragging = false;
             }
-
             function drag(e) {
-                if (isDragging) {
-                    e.preventDefault();
-                    
-                    if (e.type === 'touchmove') {
-                        currentX = e.touches[0].clientX - initialX;
-                        currentY = e.touches[0].clientY - initialY;
-                    } else {
-                        currentX = e.clientX - initialX;
-                        currentY = e.clientY - initialY;
-                    }
-
-                    xOffset = currentX;
-                    yOffset = currentY;
-
-                    setTranslate(currentX, currentY, chatWidget);
-                }
+                if (!isDragging) return;
+                e.preventDefault();
+                currentX = e.clientX - initialX;
+                currentY = e.clientY - initialY;
+                xOffset = currentX; yOffset = currentY;
+                chatWidget.style.transform = `translate3d(${currentX}px,${currentY}px,0)`;
             }
 
-            function setTranslate(xPos, yPos, el) {
-                el.style.transform = "translate3d(" + xPos + "px, " + yPos + "px, 0)";
-            }
-
-            // Chat logic
+            // Append message with new row structure
             function appendMessage(text, sender) {
-                const msgDiv = document.createElement('div');
-                msgDiv.className = 'ai-chat-msg ' + (sender === 'user' ? 'user-msg' : 'ai-msg');
-                
-                // Allow simple formatting like bold and line breaks
-                const formattedText = text.replace(/\n/g, '<br>').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-                msgDiv.innerHTML = formattedText;
-                
-                chatMessages.appendChild(msgDiv);
+                const now = new Date();
+                const timeStr = now.getHours().toString().padStart(2,'0') + ':' + now.getMinutes().toString().padStart(2,'0');
+                const formatted = text.replace(/\n/g, '<br>').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+
+                const row = document.createElement('div');
+                row.className = 'ai-msg-row' + (sender === 'user' ? ' user-row' : '');
+
+                if (sender === 'ai') {
+                    const avatarDiv = document.createElement('div');
+                    avatarDiv.className = 'ai-msg-avatar';
+                    avatarDiv.innerHTML = '<i class="fas fa-robot"></i>';
+                    row.appendChild(avatarDiv);
+                }
+
+                const col = document.createElement('div');
+                col.className = 'ai-msg-col';
+
+                const bubble = document.createElement('div');
+                bubble.className = sender === 'user' ? 'user-bubble' : 'ai-bubble';
+                bubble.innerHTML = formatted;
+
+                const time = document.createElement('div');
+                time.className = 'ai-msg-time';
+                time.textContent = timeStr;
+
+                col.appendChild(bubble);
+                col.appendChild(time);
+                row.appendChild(col);
+
+                chatMessages.appendChild(row);
                 chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+
+            // Typing indicator
+            function showTyping() {
+                const id = 'typing-' + Date.now();
+                const row = document.createElement('div');
+                row.className = 'ai-msg-row';
+                row.id = id;
+
+                const avatarDiv = document.createElement('div');
+                avatarDiv.className = 'ai-msg-avatar';
+                avatarDiv.innerHTML = '<i class="fas fa-robot"></i>';
+
+                const col = document.createElement('div');
+                col.className = 'ai-msg-col';
+
+                const bubble = document.createElement('div');
+                bubble.className = 'ai-typing-bubble';
+                bubble.innerHTML = '<div class="ai-typing-dot"></div><div class="ai-typing-dot"></div><div class="ai-typing-dot"></div>';
+
+                col.appendChild(bubble);
+                row.appendChild(avatarDiv);
+                row.appendChild(col);
+                chatMessages.appendChild(row);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+                return id;
             }
 
             async function sendMessage() {
                 const text = chatInput.value.trim();
                 if (!text) return;
-                
+
                 appendMessage(text, 'user');
                 chatInput.value = '';
-                
-                const typingId = 'typing-' + Date.now();
-                const typingDiv = document.createElement('div');
-                typingDiv.id = typingId;
-                typingDiv.className = 'ai-chat-msg ai-msg';
-                typingDiv.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Mengetik...';
-                chatMessages.appendChild(typingDiv);
-                chatMessages.scrollTop = chatMessages.scrollHeight;
 
-                const csrfTokenMeta = document.querySelector('meta[name="csrf-token"]');
-                const token = csrfTokenMeta ? csrfTokenMeta.getAttribute('content') : '';
+                const typingId = showTyping();
+                const token = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '';
 
                 try {
                     const res = await fetch('/api/chat', {
                         method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': token
-                        },
+                        headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': token },
                         body: JSON.stringify({ message: text })
                     });
-                    
                     const data = await res.json();
-                    document.getElementById(typingId).remove();
+                    document.getElementById(typingId)?.remove();
                     appendMessage(data.reply, 'ai');
                 } catch(e) {
-                    if (document.getElementById(typingId)) {
-                        document.getElementById(typingId).remove();
-                    }
+                    document.getElementById(typingId)?.remove();
                     appendMessage('Maaf, terjadi kesalahan. Silakan hubungi admin di WhatsApp 081260000492.', 'ai');
                 }
             }
 
             chatSend.addEventListener('click', sendMessage);
-            chatInput.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') sendMessage();
-            });
+            chatInput.addEventListener('keypress', e => { if (e.key === 'Enter') sendMessage(); });
         });
     </script>
 
