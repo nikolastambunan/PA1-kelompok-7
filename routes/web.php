@@ -290,7 +290,9 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
     Route::put('destination/buatan/{id}',      [AdminDestinationController::class, 'update'])->defaults('category', 'buatan')->name('admin.destination.buatan.update');
     Route::delete('destination/buatan/{id}',   [AdminDestinationController::class, 'destroy'])->defaults('category', 'buatan')->name('admin.destination.buatan.destroy');
 
+
     // --- DESTINASI BUDAYA ---
+    
     Route::get('destination/budaya',           [AdminDestinationController::class, 'index'])->defaults('category', 'budaya')->name('admin.destination.budaya.index');
     Route::get('destination/budaya/create',    [AdminDestinationController::class, 'create'])->defaults('category', 'budaya')->name('admin.destination.budaya.create');
     Route::post('destination/budaya',          [AdminDestinationController::class, 'store'])->defaults('category', 'budaya')->name('admin.destination.budaya.store');
