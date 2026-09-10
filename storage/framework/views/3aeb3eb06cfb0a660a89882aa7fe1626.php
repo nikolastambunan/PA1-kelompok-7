@@ -968,6 +968,8 @@ h1, h2, h3, h4, h5, h6, .page-title, .section-title, .navbar-brand {
 
             
             <a class="logo-wrapper" href="<?php echo e(url('/')); ?>">
+                <img src="<?php echo e(asset('image/logo/logobankindonesia.jpg')); ?>" alt="Bank Indonesia" class="logo-img" loading="lazy">
+                <div class="logo-divider"></div>
                 <img src="<?php echo e(asset('image/logo/del.jpg')); ?>" alt="Logo Del" class="logo-img" loading="lazy">
                 <div class="logo-divider"></div>
                 <span class="navbar-brand">Geo<span>Toba</span></span>
