@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', 'Geosite Danau Toba')</title>
+    <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
+    <title><?php echo $__env->yieldContent('title', 'Geosite Danau Toba'); ?></title>
     
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -956,7 +956,7 @@ h1, h2, h3, h4, h5, h6, .page-title, .section-title, .navbar-brand {
 }
 </style>
 
-    @stack('styles')
+    <?php echo $__env->yieldPushContent('styles'); ?>
 </head>
 <body>
 
@@ -966,16 +966,14 @@ h1, h2, h3, h4, h5, h6, .page-title, .section-title, .navbar-brand {
     <nav class="navbar navbar-expand-lg" id="navbar">
         <div class="container">
 
-            {{-- LOGO --}}
-            <a class="logo-wrapper" href="{{ url('/') }}">
-                <img src="{{ asset('image/logo/logobankindonesia.jpg') }}" alt="Bank Indonesia" class="logo-img" loading="lazy">
-                <div class="logo-divider"></div>
-                <img src="{{ asset('image/logo/del.jpg') }}" alt="Logo Del" class="logo-img" loading="lazy">
+            
+            <a class="logo-wrapper" href="<?php echo e(url('/')); ?>">
+                <img src="<?php echo e(asset('image/logo/del.jpg')); ?>" alt="Logo Del" class="logo-img" loading="lazy">
                 <div class="logo-divider"></div>
                 <span class="navbar-brand">Geo<span>Toba</span></span>
             </a>
 
-            {{-- TOGGLER --}}
+            
             <button class="navbar-toggler" type="button"
                     data-bs-toggle="collapse" data-bs-target="#navbarNav"
                     aria-controls="navbarNav" aria-expanded="false"
@@ -983,64 +981,64 @@ h1, h2, h3, h4, h5, h6, .page-title, .section-title, .navbar-brand {
                 <span class="navbar-toggler-icon"></span>
             </button>
 
-            {{-- MENU --}}
+            
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
 
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}"
-                           href="{{ url('/') }}">{{ __('app.nav.home') }}</a>
+                        <a class="nav-link <?php echo e(request()->routeIs('home') ? 'active' : ''); ?>"
+                           href="<?php echo e(url('/')); ?>"><?php echo e(__('app.nav.home')); ?></a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('tentang-geosite') ? 'active' : '' }}"
-                           href="{{ route('tentang-geosite') }}">{{ __('app.nav.about_geosite') }}</a>
+                        <a class="nav-link <?php echo e(request()->routeIs('tentang-geosite') ? 'active' : ''); ?>"
+                           href="<?php echo e(route('tentang-geosite')); ?>"><?php echo e(__('app.nav.about_geosite')); ?></a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('geodiversitas*') ? 'active' : '' }}"
-                           href="{{ route('geodiversitas') }}">{{ __('app.nav.geodiversity') }}</a>
+                        <a class="nav-link <?php echo e(request()->routeIs('geodiversitas*') ? 'active' : ''); ?>"
+                           href="<?php echo e(route('geodiversitas')); ?>"><?php echo e(__('app.nav.geodiversity')); ?></a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('biodiversitas*') ? 'active' : '' }}"
-                           href="{{ route('biodiversitas') }}">{{ __('app.nav.biodiversity') }}</a>
+                        <a class="nav-link <?php echo e(request()->routeIs('biodiversitas*') ? 'active' : ''); ?>"
+                           href="<?php echo e(route('biodiversitas')); ?>"><?php echo e(__('app.nav.biodiversity')); ?></a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('cultural-diversity*') ? 'active' : '' }}"
-                           href="{{ route('cultural-diversity') }}">{{ __('app.nav.cultural') }}</a>
+                        <a class="nav-link <?php echo e(request()->routeIs('cultural-diversity*') ? 'active' : ''); ?>"
+                           href="<?php echo e(route('cultural-diversity')); ?>"><?php echo e(__('app.nav.cultural')); ?></a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('destinasi*') ? 'active' : '' }}"
-                           href="{{ url('/destinasi') }}">{{ __('app.nav.destination') }}</a>
+                        <a class="nav-link <?php echo e(request()->routeIs('destinasi*') ? 'active' : ''); ?>"
+                           href="<?php echo e(url('/destinasi')); ?>"><?php echo e(__('app.nav.destination')); ?></a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('umkm.index') ? 'active' : '' }}"
-                           href="{{ route('umkm.index') }}">{{ __('app.nav.souvenir_umkm') }}</a>
+                        <a class="nav-link <?php echo e(request()->routeIs('umkm.index') ? 'active' : ''); ?>"
+                           href="<?php echo e(route('umkm.index')); ?>"><?php echo e(__('app.nav.souvenir_umkm')); ?></a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('fasilitas*') ? 'active' : '' }}"
-                           href="{{ url('/fasilitas') }}">{{ __('app.nav.facilities') }}</a>
+                        <a class="nav-link <?php echo e(request()->routeIs('fasilitas*') ? 'active' : ''); ?>"
+                           href="<?php echo e(url('/fasilitas')); ?>"><?php echo e(__('app.nav.facilities')); ?></a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('berita*') ? 'active' : '' }}"
-                           href="{{ url('/berita') }}">{{ __('app.nav.news') }}</a>
+                        <a class="nav-link <?php echo e(request()->routeIs('berita*') ? 'active' : ''); ?>"
+                           href="<?php echo e(url('/berita')); ?>"><?php echo e(__('app.nav.news')); ?></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('kontak') ? 'active' : '' }}"
-                           href="{{ url('/kontak') }}">Kontak</a>
+                        <a class="nav-link <?php echo e(request()->routeIs('kontak') ? 'active' : ''); ?>"
+                           href="<?php echo e(url('/kontak')); ?>">Kontak</a>
                     </li>
 
                 </ul>
 
                 <div class="search-wrapper" id="searchWrapper">
                     <form id="globalSearchForm"
-                          action="{{ route('search.results') }}"
+                          action="<?php echo e(route('search.results')); ?>"
                           method="GET"
                           style="display:contents;"
                           onsubmit="handleSearchSubmit(event)">
@@ -1052,11 +1050,11 @@ h1, h2, h3, h4, h5, h6, .page-title, .section-title, .navbar-brand {
                                 type="text"
                                 id="globalSearchInput"
                                 name="q"
-                                placeholder="{{ __('app.nav.search_placeholder') }}"
+                                placeholder="<?php echo e(__('app.nav.search_placeholder')); ?>"
                                 autocomplete="off"
                                 aria-label="Pencarian Global"
                                 maxlength="100"
-                                value="{{ request('q') }}"
+                                value="<?php echo e(request('q')); ?>"
                             >
                             <button class="search-clear-btn" id="searchClearBtn"
                                     type="button" aria-label="Hapus pencarian">
@@ -1073,14 +1071,14 @@ h1, h2, h3, h4, h5, h6, .page-title, .section-title, .navbar-brand {
     <!-- ========================================
     MAIN CONTENT
     ======================================== -->
-    <main style="margin: 0; padding: 0;">@yield('content')</main>
+    <main style="margin: 0; padding: 0;"><?php echo $__env->yieldContent('content'); ?></main>
 
           <!-- ========================================
     FOOTER MODERN
       ======================================== -->
-      @php
+      <?php
           $kontakInfo = \App\Models\Kontak::first();
-      @endphp
+      ?>
     <footer class="footer">
         <div class="footer-container">
             <div class="footer-grid">
@@ -1088,63 +1086,63 @@ h1, h2, h3, h4, h5, h6, .page-title, .section-title, .navbar-brand {
                 <!-- Brand Column -->
                 <div class="footer-brand">
                     <div class="logo-footer">
-                        <img src="{{ asset('image/logo/del.jpg') }}" alt="Logo Del" class="logo-footer-img" loading="lazy">
+                        <img src="<?php echo e(asset('image/logo/del.jpg')); ?>" alt="Logo Del" class="logo-footer-img" loading="lazy">
                     </div>
                     <h4>Geo<span>Toba</span></h4>
-                    <p>{{ __('app.footer.tagline') }}</p>
+                    <p><?php echo e(__('app.footer.tagline')); ?></p>
                                         <div class="footer-social">
-                          @if(isset($kontakInfo) && $kontakInfo->social_fb)<a href="{{ $kontakInfo->social_fb }}" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>@endif
-                          @if(isset($kontakInfo) && $kontakInfo->social_ig)<a href="{{ $kontakInfo->social_ig }}" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>@endif
-                          @if(isset($kontakInfo) && $kontakInfo->social_youtube)<a href="{{ $kontakInfo->social_youtube }}" target="_blank" aria-label="YouTube"><i class="fab fa-youtube"></i></a>@endif
-                          @if(isset($kontakInfo) && $kontakInfo->social_twitter)<a href="{{ $kontakInfo->social_twitter }}" target="_blank" aria-label="Twitter"><i class="fab fa-twitter"></i></a>@endif
-                          @if(isset($kontakInfo) && $kontakInfo->social_tiktok)<a href="{{ $kontakInfo->social_tiktok }}" target="_blank" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>@endif
+                          <?php if(isset($kontakInfo) && $kontakInfo->social_fb): ?><a href="<?php echo e($kontakInfo->social_fb); ?>" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a><?php endif; ?>
+                          <?php if(isset($kontakInfo) && $kontakInfo->social_ig): ?><a href="<?php echo e($kontakInfo->social_ig); ?>" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a><?php endif; ?>
+                          <?php if(isset($kontakInfo) && $kontakInfo->social_youtube): ?><a href="<?php echo e($kontakInfo->social_youtube); ?>" target="_blank" aria-label="YouTube"><i class="fab fa-youtube"></i></a><?php endif; ?>
+                          <?php if(isset($kontakInfo) && $kontakInfo->social_twitter): ?><a href="<?php echo e($kontakInfo->social_twitter); ?>" target="_blank" aria-label="Twitter"><i class="fab fa-twitter"></i></a><?php endif; ?>
+                          <?php if(isset($kontakInfo) && $kontakInfo->social_tiktok): ?><a href="<?php echo e($kontakInfo->social_tiktok); ?>" target="_blank" aria-label="TikTok"><i class="fab fa-tiktok"></i></a><?php endif; ?>
                       </div>
                 </div>
 
                 <!-- Quick Links -->
                 <div class="footer-col">
-                    <h5>{{ __('app.footer.quick_links') }}</h5>
+                    <h5><?php echo e(__('app.footer.quick_links')); ?></h5>
                     <div class="footer-menu">
-                        <a href="{{ url('/') }}"><i class="fas fa-chevron-right"></i> {{ __('app.nav.home') }}</a>
-                        <a href="{{ route('tentang-geosite') }}"><i class="fas fa-chevron-right"></i> {{ __('app.nav.about_geosite') }}</a>
-                        <a href="{{ url('/destinasi') }}"><i class="fas fa-chevron-right"></i> {{ __('app.nav.destination') }}</a>
-                        <a href="{{ url('/berita') }}"><i class="fas fa-chevron-right"></i> {{ __('app.nav.news') }}</a>
-                        <a href="{{ url('/galeri') }}"><i class="fas fa-chevron-right"></i> {{ __('app.nav.gallery') }}</a>
+                        <a href="<?php echo e(url('/')); ?>"><i class="fas fa-chevron-right"></i> <?php echo e(__('app.nav.home')); ?></a>
+                        <a href="<?php echo e(route('tentang-geosite')); ?>"><i class="fas fa-chevron-right"></i> <?php echo e(__('app.nav.about_geosite')); ?></a>
+                        <a href="<?php echo e(url('/destinasi')); ?>"><i class="fas fa-chevron-right"></i> <?php echo e(__('app.nav.destination')); ?></a>
+                        <a href="<?php echo e(url('/berita')); ?>"><i class="fas fa-chevron-right"></i> <?php echo e(__('app.nav.news')); ?></a>
+                        <a href="<?php echo e(url('/galeri')); ?>"><i class="fas fa-chevron-right"></i> <?php echo e(__('app.nav.gallery')); ?></a>
                     </div>
                 </div>
 
                 <!-- Diversity -->
                 <div class="footer-col">
-                    <h5>{{ __('app.footer.diversity') }}</h5>
+                    <h5><?php echo e(__('app.footer.diversity')); ?></h5>
                     <div class="footer-menu">
-                        <a href="{{ route('geodiversitas') }}"><i class="fas fa-chevron-right"></i> {{ __('app.nav.geodiversity') }}</a>
-                        <a href="{{ route('biodiversitas') }}"><i class="fas fa-chevron-right"></i> {{ __('app.nav.biodiversity') }}</a>
-                        <a href="{{ route('cultural-diversity') }}"><i class="fas fa-chevron-right"></i> {{ __('app.nav.cultural') }}</a>
+                        <a href="<?php echo e(route('geodiversitas')); ?>"><i class="fas fa-chevron-right"></i> <?php echo e(__('app.nav.geodiversity')); ?></a>
+                        <a href="<?php echo e(route('biodiversitas')); ?>"><i class="fas fa-chevron-right"></i> <?php echo e(__('app.nav.biodiversity')); ?></a>
+                        <a href="<?php echo e(route('cultural-diversity')); ?>"><i class="fas fa-chevron-right"></i> <?php echo e(__('app.nav.cultural')); ?></a>
                     </div>
                 </div>
 
                 <!-- Contact -->
                                 <div class="footer-col">
-                    <h5>{{ __('app.footer.contact') }}</h5>
+                    <h5><?php echo e(__('app.footer.contact')); ?></h5>
                     <div class="footer-contact">
-                          @if(isset($kontakInfo) && $kontakInfo->alamat)
+                          <?php if(isset($kontakInfo) && $kontakInfo->alamat): ?>
                           <div class="contact-item">
                               <i class="fas fa-map-marker-alt"></i>
-                              <span>{{ $kontakInfo->alamat }}</span>
+                              <span><?php echo e($kontakInfo->alamat); ?></span>
                           </div>
-                          @endif
-                          @if(isset($kontakInfo) && $kontakInfo->telepon)
+                          <?php endif; ?>
+                          <?php if(isset($kontakInfo) && $kontakInfo->telepon): ?>
                           <div class="contact-item">
                               <i class="fas fa-phone"></i>
-                              <span>{{ $kontakInfo->telepon }}</span>
+                              <span><?php echo e($kontakInfo->telepon); ?></span>
                           </div>
-                          @endif
-                          @if(isset($kontakInfo) && $kontakInfo->email)
+                          <?php endif; ?>
+                          <?php if(isset($kontakInfo) && $kontakInfo->email): ?>
                           <div class="contact-item">
                               <i class="fas fa-envelope"></i>
-                              <span>{{ $kontakInfo->email }}</span>
+                              <span><?php echo e($kontakInfo->email); ?></span>
                           </div>
-                          @endif
+                          <?php endif; ?>
                       </div>
                   </div>
                 </div>
@@ -1154,10 +1152,10 @@ h1, h2, h3, h4, h5, h6, .page-title, .section-title, .navbar-brand {
             <!-- Bottom -->
             <div class="footer-bottom">
                 <div class="footer-copyright">
-                    <p>&copy; {{ date('Y') }} GeoToba - Geopark Danau Toba. {{ __('app.footer.copyright') }}</p>
+                    <p>&copy; <?php echo e(date('Y')); ?> GeoToba - Geopark Danau Toba. <?php echo e(__('app.footer.copyright')); ?></p>
                 </div>
                 <div class="footer-credit">
-                    <span>{{ __('app.footer.designed_by') }} <a href="#">Kelompok 10</a></span>
+                    <span><?php echo e(__('app.footer.designed_by')); ?> <a href="#">Kelompok 10</a></span>
                 </div>
             </div>
         </div>
@@ -1166,29 +1164,27 @@ h1, h2, h3, h4, h5, h6, .page-title, .section-title, .navbar-brand {
     <!-- BACK TO TOP -->
     <div class="back-to-top" id="backToTop" aria-label="Back to top">
         <i class="fas fa-arrow-up"></i>
-    </div>    {{-- ========================================
-         WIDGET FLOATING GANTI BAHASA - pill ID | EN (Google Translate)
-    ======================================== --}}
-    @php
+    </div>    
+    <?php
         $currentLang = 'id';
         if(isset($_COOKIE['googtrans']) && str_contains($_COOKIE['googtrans'], '/en')) {
             $currentLang = 'en';
         }
-    @endphp
+    ?>
     
     <div class="lang-switcher-widget" id="langSwitcherWidget">
-        {{-- Tombol Bahasa Indonesia --}}
+        
         <a href="#"
-           class="lang-btn {{ $currentLang === 'id' ? 'lang-btn--active' : '' }}"
+           class="lang-btn <?php echo e($currentLang === 'id' ? 'lang-btn--active' : ''); ?>"
            title="Bahasa Indonesia"
            aria-label="Ganti ke Bahasa Indonesia"
            onclick="doGTranslate('id'); return false;">
             <span class="lang-code">ID</span>
         </a>
 
-        {{-- Tombol Bahasa Inggris --}}
+        
         <a href="#"
-           class="lang-btn {{ $currentLang === 'en' ? 'lang-btn--active' : '' }}"
+           class="lang-btn <?php echo e($currentLang === 'en' ? 'lang-btn--active' : ''); ?>"
            title="English"
            aria-label="Switch to English"
            onclick="doGTranslate('en'); return false;">
@@ -1341,14 +1337,14 @@ h1, h2, h3, h4, h5, h6, .page-title, .section-title, .navbar-brand {
         const searchDropdown = document.getElementById('searchResultsDropdown');
         const searchClearBtn = document.getElementById('searchClearBtn');
         const searchWrapper  = document.getElementById('searchWrapper');
-        const SEARCH_URL     = '{{ route("search") }}';
+        const SEARCH_URL     = '<?php echo e(route("search")); ?>';
         let debounceTimer    = null;
 
         function showLoading() {
             searchDropdown.style.display = 'block';
             searchDropdown.innerHTML = `
                 <div class="search-loading">
-                    <i class="fas fa-circle-notch"></i> ${@json(__('app.nav.searching'))}
+                    <i class="fas fa-circle-notch"></i> ${<?php echo json_encode(__('app.nav.searching'), 15, 512) ?>}
                 </div>
             `;
         }
@@ -1357,7 +1353,7 @@ h1, h2, h3, h4, h5, h6, .page-title, .section-title, .navbar-brand {
             searchDropdown.innerHTML = `
                 <div class="search-empty-state">
                     <i class="fas fa-search-minus"></i>
-                    <p>${@json(__('app.nav.search_no_result'))} <strong>"${escapeHtml(query)}"</strong></p>
+                    <p>${<?php echo json_encode(__('app.nav.search_no_result'), 15, 512) ?>} <strong>"${escapeHtml(query)}"</strong></p>
                 </div>
             `;
         }
@@ -1384,7 +1380,7 @@ h1, h2, h3, h4, h5, h6, .page-title, .section-title, .navbar-brand {
                 return;
             }
 
-            let html = `<div class="search-results-header"><i class="fas fa-bolt me-1"></i> ${@json(__('app.nav.search_results'))} (${results.length})</div>`;
+            let html = `<div class="search-results-header"><i class="fas fa-bolt me-1"></i> ${<?php echo json_encode(__('app.nav.search_results'), 15, 512) ?>} (${results.length})</div>`;
 
             results.forEach(function (item) {
                 const thumbHtml = item.gambar_url
@@ -1430,7 +1426,7 @@ h1, h2, h3, h4, h5, h6, .page-title, .section-title, .navbar-brand {
                 searchDropdown.innerHTML = `
                     <div class="search-empty-state">
                         <i class="fas fa-exclamation-triangle" style="color: #f59e0b;"></i>
-                        <p>${@json(__('app.common.no_data'))}</p>
+                        <p>${<?php echo json_encode(__('app.common.no_data'), 15, 512) ?>}</p>
                     </div>
                 `;
                 searchDropdown.style.display = 'block';
@@ -1486,6 +1482,7 @@ h1, h2, h3, h4, h5, h6, .page-title, .section-title, .navbar-brand {
 
 
 
-    @stack('scripts')
+    <?php echo $__env->yieldPushContent('scripts'); ?>
 </body>
 </html>
+<?php /**PATH C:\Proyek akhir 1 Real\resources\views/layouts/app.blade.php ENDPATH**/ ?>
