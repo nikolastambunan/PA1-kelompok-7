@@ -321,10 +321,6 @@
             <div class="left-content">
                 <div class="logo-area">
                     <div class="logo-badge">
-                        <img src="{{ asset('image/logo/logobankindonesia.jpg') }}" alt="Bank Indonesia">
-                    </div>
-                    <div class="logo-sep"></div>
-                    <div class="logo-badge">
                         <img src="{{ asset('image/logo/del.jpg') }}" alt="Del">
                     </div>
                     <div class="logo-sep"></div>

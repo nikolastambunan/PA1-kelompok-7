@@ -1080,38 +1080,6 @@
     </div>
 </section>
 
-<!-- ==================== CALDERA TOBA GEOPARK LINK ==================== -->
-<section class="section section-white">
-    <div class="container">
-        <div class="section-header" data-aos="fade-up">
-            <span class="badge">{{ __('app.home.official_website') }}</span>
-            <h2>{{ __('app.home.kaldera_toba') }}</h2>
-            <div class="divider"></div>
-            <p>{{ __('app.home.kaldera_desc') }}</p>
-        </div>
-        <div style="text-align:center; margin-top:40px;" data-aos="zoom-in">
-            <a href="https://calderatobageopark.org/" target="_blank" rel="noopener noreferrer" style="
-                display: inline-flex;
-                align-items: center;
-                gap: 15px;
-                background: linear-gradient(135deg, var(--primary), var(--primary-light));
-                color: white;
-                padding: 16px 36px;
-                border-radius: 50px;
-                font-size: 1.1rem;
-                font-weight: 700;
-                text-decoration: none;
-                box-shadow: 0 10px 30px rgba(0,51,102,0.25);
-                transition: all 0.3s ease;
-            " onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 15px 35px rgba(0,51,102,0.35)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 10px 30px rgba(0,51,102,0.25)'">
-                <i class="fas fa-globe-asia" style="font-size:1.3rem;"></i>
-                {{ __('app.home.visit_kaldera') }}
-                <i class="fas fa-external-link-alt" style="font-size:0.9rem; margin-left:5px;"></i>
-            </a>
-        </div>
-    </div>
-</section>
-
 
 <!-- ==================== CTA ==================== -->
 <section class="cta-section">

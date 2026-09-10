@@ -19,6 +19,7 @@ class AdminSeeder extends Seeder
             ]
         );
         
+        $this ->command->info('Admin harus di perbiki');
         $this->command->info('Admin berhasil dibuat!');
         $this->command->info('Email: admina246@gmail.com');
         $this->command->info('Password: admin123');
