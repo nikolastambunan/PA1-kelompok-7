@@ -49,6 +49,15 @@ Route::get('/search', [PublicSearchController::class, 'search'])->name('search')
 Route::get('/search-results', [PublicSearchController::class, 'searchResults'])->name('search.results');
 
 // ========================================
+// ========== QR CODE DESTINASI WISATA (BALG) ==========
+// ========================================
+use App\Http\Controllers\PublicQrDestinationController;
+use App\Http\Controllers\Admin\AdminQrDestinationController;
+
+Route::get('/qr', [PublicQrDestinationController::class, 'index'])->name('qr.index');
+Route::get('/qr/{kode}', [PublicQrDestinationController::class, 'show'])->name('qr.show');
+
+// ========================================
 // ========== TENTANG GEOSITE ==========
 // ========================================
 Route::get('/tentang-geosite', [PublicTentangGeositeController::class, 'index'])->name('tentang-geosite');
@@ -205,6 +214,7 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
         $totalPenginapan   = DB::table('penginapan')->count();
         $totalBiodiversitas= DB::table('biodiversitas')->count();
         $totalSejarah      = DB::table('sejarah_wisata')->count();
+        $totalQr           = DB::table('qr_destinations')->count();
         $totalViews        = 0;
         $beritaTerbaru     = App\Models\Berita::latest()->limit(5)->get();
 
@@ -218,6 +228,7 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
             'totalPenginapan',
             'totalBiodiversitas',
             'totalSejarah',
+            'totalQr',
             'totalViews',
             'beritaTerbaru'
         ));
@@ -241,6 +252,11 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
     Route::resource('sejarah-wisata', AdminSejarahWisataController::class)->names('admin.sejarah-wisata');
     Route::post('sejarah-wisata/toggle-status/{id}', [AdminSejarahWisataController::class, 'toggleStatus'])->name('admin.sejarah-wisata.toggle-status');
     Route::get('sejarah-wisata/filter/{geosite}', [AdminSejarahWisataController::class, 'filter'])->name('admin.sejarah-wisata.filter');
+
+    // ========== QR CODE DESTINASI WISATA (BALG) ==========
+    Route::resource('qr-destinasi', AdminQrDestinationController::class)->names('admin.qr-destinasi');
+    Route::get('qr-destinasi/{id}/print', [AdminQrDestinationController::class, 'printCard'])->name('admin.qr-destinasi.print');
+    Route::post('qr-destinasi/toggle-status/{id}', [AdminQrDestinationController::class, 'toggleStatus'])->name('admin.qr-destinasi.toggle-status');
 
     // ========== RESOURCE CRUD ==========
     Route::resource('galeri', AdminGaleriController::class)->names('admin.galeri');
@@ -303,4 +319,6 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
 
 Route::get('/debug-lang', function() { return 'Locale: ' . app()->getLocale() . ' Session: ' . session('locale'); });
 
-Route::post('/api/chat', [App\Http\Controllers\ChatController::class, 'sendMessage']);
+if (class_exists(\App\Http\Controllers\ChatController::class)) {
+    Route::post('/api/chat', [\App\Http\Controllers\ChatController::class, 'sendMessage']);
+}

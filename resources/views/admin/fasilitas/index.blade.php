@@ -344,6 +344,7 @@
                     <th>No</th>
                     <th>Gambar</th>
                     <th>Nama</th>
+                    <th>Destinasi</th>
                     <th>Jenis</th>
                     <th>Lokasi</th>
                     <th>Kontak</th>
@@ -366,6 +367,13 @@
                     </td>
                     <td data-label="Nama">
                         <strong>{{ Str::limit($item->nama, 30) }}</strong>
+                    </td>
+                    <td data-label="Destinasi">
+                        @if($item->destination_code)
+                            <span class="badge" style="background:#003366; color:white; font-weight:700;">{{ $item->destination_code }}</span>
+                        @else
+                            <span class="badge" style="background:#f1f5f9; color:#64748b;">Semua Titik</span>
+                        @endif
                     </td>
                     <td data-label="Jenis">
                         <span class="badge badge-warning">{{ ucwords($item->jenis ?? '-') }}</span>

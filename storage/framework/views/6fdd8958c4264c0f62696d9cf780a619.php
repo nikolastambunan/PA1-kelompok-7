@@ -339,7 +339,7 @@ h1, h2, h3, h4, h5, h6, .page-title, .section-title, .navbar-brand {
     font-weight: bold !important;
 }
 </style>
-    @stack('styles')
+    <?php echo $__env->yieldPushContent('styles'); ?>
 </head>
 <body>
 
@@ -350,83 +350,79 @@ h1, h2, h3, h4, h5, h6, .page-title, .section-title, .navbar-brand {
         <p>Administrator</p>
     </div>
     <div class="sidebar-menu">
-        <a href="{{ route('admin.dashboard') }}" class="{{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
+        <a href="<?php echo e(route('admin.dashboard')); ?>" class="<?php echo e(request()->routeIs('admin.dashboard') ? 'active' : ''); ?>">
             <i class="fas fa-home"></i> Dashboard
         </a>
 
         <div class="menu-title">HOMEPAGE</div>
-        <a href="{{ route('admin.slider.index') }}" class="{{ request()->routeIs('admin.slider.*') ? 'active' : '' }}">
+        <a href="<?php echo e(route('admin.slider.index')); ?>" class="<?php echo e(request()->routeIs('admin.slider.*') ? 'active' : ''); ?>">
             Manajemen Slider
         </a>
         
         <div class="menu-title">Konten</div>
 
-        <a href="{{ route('admin.galeri.index') }}" class="{{ request()->routeIs('admin.galeri.*') ? 'active' : '' }}">
+        <a href="<?php echo e(route('admin.galeri.index')); ?>" class="<?php echo e(request()->routeIs('admin.galeri.*') ? 'active' : ''); ?>">
             Galeri
         </a>
-        <a href="{{ route('admin.pengelola-geosite.index') }}" class="{{ request()->routeIs('admin.pengelola-geosite.*') ? 'active' : '' }}">
+        <a href="<?php echo e(route('admin.pengelola-geosite.index')); ?>" class="<?php echo e(request()->routeIs('admin.pengelola-geosite.*') ? 'active' : ''); ?>">
             Pengelola Geosite
         </a>
 
         <div class="menu-title">Berita & Informasi</div>
-        <a href="{{ route('admin.berita.index') }}" class="{{ request()->routeIs('admin.berita.*') ? 'active' : '' }}">
+        <a href="<?php echo e(route('admin.berita.index')); ?>" class="<?php echo e(request()->routeIs('admin.berita.*') ? 'active' : ''); ?>">
             Berita Terkini
         </a>
-        <a href="{{ route('admin.agenda.index') }}" class="{{ request()->routeIs('admin.agenda.*') ? 'active' : '' }}">
+        <a href="<?php echo e(route('admin.agenda.index')); ?>" class="<?php echo e(request()->routeIs('admin.agenda.*') ? 'active' : ''); ?>">
             Agenda / Event
         </a>
-        <a href="{{ route('admin.pengumuman.index') }}" class="{{ request()->routeIs('admin.pengumuman.*') ? 'active' : '' }}">
+        <a href="<?php echo e(route('admin.pengumuman.index')); ?>" class="<?php echo e(request()->routeIs('admin.pengumuman.*') ? 'active' : ''); ?>">
             Pengumuman
         </a>
 
-        {{-- ========== GROUP DESTINASI ========== --}}
+        
         <div class="menu-title">Destinasi</div>
-        <a href="{{ route('admin.qr-destinasi.index') }}"
-           class="{{ request()->routeIs('admin.qr-destinasi.*') ? 'active' : '' }}">
-            <i class="fas fa-qrcode"></i> QR Wisata (BALG)
-        </a>
-        <a href="{{ route('admin.destination.alam.index') }}"
-           class="{{ request()->routeIs('admin.destination.alam.*') ? 'active' : '' }}">
+        <a href="<?php echo e(route('admin.destination.alam.index')); ?>"
+           class="<?php echo e(request()->routeIs('admin.destination.alam.*') ? 'active' : ''); ?>">
             Destinasi Alam
         </a>
-        <a href="{{ route('admin.destination.buatan.index') }}"
-           class="{{ request()->routeIs('admin.destination.buatan.*') ? 'active' : '' }}">
+        <a href="<?php echo e(route('admin.destination.buatan.index')); ?>"
+           class="<?php echo e(request()->routeIs('admin.destination.buatan.*') ? 'active' : ''); ?>">
             Destinasi Buatan
         </a>
-        <a href="{{ route('admin.destination.budaya.index') }}"
-           class="{{ request()->routeIs('admin.destination.budaya.*') ? 'active' : '' }}">
+        <a href="<?php echo e(route('admin.destination.budaya.index')); ?>"
+           class="<?php echo e(request()->routeIs('admin.destination.budaya.*') ? 'active' : ''); ?>">
             Destinasi Budaya
         </a>
 
         <div class="menu-title">Keanekaragaman</div>
-        <a href="{{ route('admin.biodiversitas.index') }}" class="{{ request()->routeIs('admin.biodiversitas.*') ? 'active' : '' }}">
+        <a href="<?php echo e(route('admin.biodiversitas.index')); ?>" class="<?php echo e(request()->routeIs('admin.biodiversitas.*') ? 'active' : ''); ?>">
             Biodiversity
         </a>
-        <a href="{{ route('admin.geodiversitas.index') }}" class="{{ request()->routeIs('admin.geodiversitas.*') ? 'active' : '' }}">
+        <a href="<?php echo e(route('admin.geodiversitas.index')); ?>" class="<?php echo e(request()->routeIs('admin.geodiversitas.*') ? 'active' : ''); ?>">
             Geodiversity
         </a>
-        <a href="{{ route('admin.cultural-diversity.index') }}" class="{{ request()->routeIs('admin.cultural-diversity.*') ? 'active' : '' }}">
+        <a href="<?php echo e(route('admin.cultural-diversity.index')); ?>" class="<?php echo e(request()->routeIs('admin.cultural-diversity.*') ? 'active' : ''); ?>">
             Cultural Diversity
         </a>
         
         <div class="menu-title">Fasilitas</div>
-        <a href="{{ route('admin.umkm.index') }}" class="{{ request()->routeIs('admin.umkm.*') ? 'active' : '' }}">
+        <a href="<?php echo e(route('admin.umkm.index')); ?>" class="<?php echo e(request()->routeIs('admin.umkm.*') ? 'active' : ''); ?>">
            Sovenir&UMKM
 </a>
 
-        <a href="{{ route('admin.fasilitas.index') }}" class="{{ request()->routeIs('admin.fasilitas.*') ? 'active' : '' }}">
+        <a href="<?php echo e(route('admin.fasilitas.index')); ?>" class="<?php echo e(request()->routeIs('admin.fasilitas.*') ? 'active' : ''); ?>">
             Fasilitas
         </a>
 
-        <a href="{{ route('admin.penginapan.index') }}" class="{{ request()->routeIs('admin.penginapan.*') ? 'active' : '' }}">
+        <a href="<?php echo e(route('admin.penginapan.index')); ?>" class="<?php echo e(request()->routeIs('admin.penginapan.*') ? 'active' : ''); ?>">
             Penginapan
         </a>
-        <a href="{{ route('admin.kuliner.index') }}" class="{{ request()->routeIs('admin.kuliner.*') ? 'active' : '' }}">
+        <a href="<?php echo e(route('admin.kuliner.index')); ?>" class="<?php echo e(request()->routeIs('admin.kuliner.*') ? 'active' : ''); ?>">
             Kuliner / Restoran
         </a>
         
         <div class="menu-title">Pengaturan</div>
-        <a href="{{ route('admin.kontak.index') }}" class="{{ request()->routeIs('admin.kontak.*') ? 'active' : '' }}">
+        <a href="<?php echo e(route('admin.kontak.index')); ?>" class="<?php echo e(request()->routeIs('admin.kontak.*') ? 'active' : ''); ?>">
             Pengaturan Kontak
         </a>
     </div>
@@ -439,12 +435,12 @@ h1, h2, h3, h4, h5, h6, .page-title, .section-title, .navbar-brand {
             <button class="menu-toggle" id="menuToggle">
                 <i class="fas fa-bars"></i>
             </button>
-            <div class="page-title">@yield('title', 'Dashboard')</div>
+            <div class="page-title"><?php echo $__env->yieldContent('title', 'Dashboard'); ?></div>
         </div>
         <div class="user-menu">
-            <span class="user-name"><i class="fas fa-user-circle"></i> {{ Auth::user()->name ?? 'Admin' }}</span>
-            <form action="{{ url('/logout') }}" method="POST" class="d-inline" id="logoutForm">
-                @csrf
+            <span class="user-name"><i class="fas fa-user-circle"></i> <?php echo e(Auth::user()->name ?? 'Admin'); ?></span>
+            <form action="<?php echo e(url('/logout')); ?>" method="POST" class="d-inline" id="logoutForm">
+                <?php echo csrf_field(); ?>
                 <button type="submit" class="logout-btn">
                     <i class="fas fa-sign-out-alt"></i> Keluar
                 </button>
@@ -452,7 +448,7 @@ h1, h2, h3, h4, h5, h6, .page-title, .section-title, .navbar-brand {
         </div>
     </div>
 
-    @yield('content')
+    <?php echo $__env->yieldContent('content'); ?>
 </div>
 
 <script>
@@ -484,7 +480,7 @@ h1, h2, h3, h4, h5, h6, .page-title, .section-title, .navbar-brand {
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-@stack('scripts')
+<?php echo $__env->yieldPushContent('scripts'); ?>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
@@ -512,3 +508,4 @@ h1, h2, h3, h4, h5, h6, .page-title, .section-title, .navbar-brand {
 
 
 
+<?php /**PATH C:\Proyek akhir 1 Real\resources\views/layouts/admin.blade.php ENDPATH**/ ?>

@@ -230,6 +230,23 @@
                     @endforeach
                 </select>
             </div>
+
+            <div class="mb-3">
+                <label>Pilihan Destinasi Terkait (Opsional / Spesifik Titik Wisata)</label>
+                <select name="destination_code" class="form-control">
+                    <option value="">-- Tersedia Untuk Umum / Semua Destinasi --</option>
+                    @if(isset($destinations))
+                        @foreach($destinations as $d)
+                            <option value="{{ $d->kode }}" {{ old('destination_code') == $d->kode ? 'selected' : '' }}>
+                                {{ $d->kode }} - {{ $d->nama }}
+                            </option>
+                        @endforeach
+                    @endif
+                </select>
+                <div class="form-text" style="color:#64748b; font-size:0.75rem; margin-top:4px;">
+                    Pilih apakah fasilitas ini khusus berada di titik BALG-001 s/d BALG-007 agar fasilitas setiap destinasi berbeda & terarah.
+                </div>
+            </div>
             
             <div class="mb-3">
                 <label>Deskripsi <span class="text-danger">*</span></label>

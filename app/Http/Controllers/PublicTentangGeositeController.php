@@ -21,6 +21,9 @@ class PublicTentangGeositeController extends Controller
         // Ambil data pengelola
         $pengelolas = PengelolaGeosite::orderBy('urutan', 'asc')->get();
 
-        return view('pages.tentang-geosite', compact('geositeList', 'pengelolas'));
+        // Ambil 7 titik QR Geosite
+        $qrDestinations = \App\Models\QrDestination::where('status', true)->orderBy('kode', 'asc')->get();
+
+        return view('pages.tentang-geosite', compact('geositeList', 'pengelolas', 'qrDestinations'));
     }
 }

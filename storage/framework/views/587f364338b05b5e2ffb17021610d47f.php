@@ -1,8 +1,6 @@
-@extends('layouts.app')
+<?php $__env->startSection('title', $destination->title_trans . ' - Geosite Danau Toba'); ?>
 
-@section('title', $destination->title_trans . ' - Geosite Danau Toba')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
 
 <style>
     :root {
@@ -287,159 +285,165 @@
     }
 </style>
 
-{{-- ── HERO SECTION ── --}}
+
 <section class="hero-section">
-    <img src="{{ $destination->hero_image_url }}" alt="Hero {{ $destination->title }}" class="hero-bg" onerror="this.onerror=null; this.src='{{ asset('image/default.jpg') }}'">
+    <img src="<?php echo e($destination->hero_image_url); ?>" alt="Hero <?php echo e($destination->title); ?>" class="hero-bg" onerror="this.onerror=null; this.src='<?php echo e(asset('image/default.jpg')); ?>'">
     <div class="hero-overlay"></div>
     <div class="hero-content">
-        <h1 class="hero-title">{{ $destination->title_trans }}</h1>
-        <div class="hero-subtitle">{{ app()->getLocale() == 'en' ? 'Destination' : 'Destinasi' }} {{ ucfirst($category) }} - Geosite Danau Toba</div>
+        <h1 class="hero-title"><?php echo e($destination->title_trans); ?></h1>
+        <div class="hero-subtitle"><?php echo e(app()->getLocale() == 'en' ? 'Destination' : 'Destinasi'); ?> <?php echo e(ucfirst($category)); ?> - Geosite Danau Toba</div>
     </div>
 </section>
 
-{{-- ── BREADCRUMB ── --}}
+
 <div class="breadcrumb-bar">
     <div class="container" style="max-width:1000px; padding:0 20px; margin:0 auto;">
-        <a href="{{ url('/') }}">Beranda</a> <span>></span>
+        <a href="<?php echo e(url('/')); ?>">Beranda</a> <span>></span>
         <a href="#">Destinasi</a> <span>></span>
-        <a href="{{ route('destinasi.' . $category) }}">{{ ucfirst($category) }}</a> <span>></span>
-        <span class="breadcrumb-current">{{ $destination->title_trans }}</span>
+        <a href="<?php echo e(route('destinasi.' . $category)); ?>"><?php echo e(ucfirst($category)); ?></a> <span>></span>
+        <span class="breadcrumb-current"><?php echo e($destination->title_trans); ?></span>
     </div>
 </div>
 
-{{-- ── KONTEN UTAMA ── --}}
+
 <main class="main-container">
     
-    {{-- Card Atas: Foto & Info Singkat --}}
+    
     <div class="top-card">
         <div class="top-card-left">
-            <img src="{{ $destination->image_url }}" alt="{{ $destination->title_trans }}" onerror="this.onerror=null; this.src='{{ asset('image/default.jpg') }}'">
+            <img src="<?php echo e($destination->image_url); ?>" alt="<?php echo e($destination->title_trans); ?>" onerror="this.onerror=null; this.src='<?php echo e(asset('image/default.jpg')); ?>'">
             <div class="photo-badge">
                 <i class="fas fa-camera"></i> 1 Foto
             </div>
         </div>
         <div class="top-card-right">
             <div class="cat-badge">
-                {{ ucfirst($category) }}
+                <?php echo e(ucfirst($category)); ?>
+
             </div>
             
-            <h2>{{ $destination->title_trans }}</h2>
+            <h2><?php echo e($destination->title_trans); ?></h2>
             
             <div class="location-text">
                 <i class="fas fa-map-marker-alt"></i>
-                {{ $destination->location ?? 'Geosite Danau Toba, Sumatera Utara' }}
+                <?php echo e($destination->location ?? 'Geosite Danau Toba, Sumatera Utara'); ?>
+
             </div>
             
             <div class="short-desc">
-                {{ $destination->short_description_trans ?? Str::limit(strip_tags($destination->description_trans), 150) }}
+                <?php echo e($destination->short_description_trans ?? Str::limit(strip_tags($destination->description_trans), 150)); ?>
+
             </div>
             
             <div class="info-boxes">
                 <div class="info-box">
                     <i class="fas fa-clock"></i>
-                    <span>{{ app()->getLocale() == 'en' ? 'Operational Hours' : 'Jam Operasional' }}</span>
-                    <strong>{{ $destination->operational_hours ?? '-' }}</strong>
+                    <span><?php echo e(app()->getLocale() == 'en' ? 'Operational Hours' : 'Jam Operasional'); ?></span>
+                    <strong><?php echo e($destination->operational_hours ?? '-'); ?></strong>
                 </div>
                 <div class="info-box">
                     <i class="fas fa-ticket-alt"></i>
-                    <span>{{ app()->getLocale() == 'en' ? 'Price' : 'Harga' }}</span>
-                    <strong>{{ $destination->ticket_price ?? (app()->getLocale() == 'en' ? 'Free' : 'Gratis') }}</strong>
+                    <span><?php echo e(app()->getLocale() == 'en' ? 'Price' : 'Harga'); ?></span>
+                    <strong><?php echo e($destination->ticket_price ?? (app()->getLocale() == 'en' ? 'Free' : 'Gratis')); ?></strong>
                 </div>
             </div>
             
             <div class="tags-container">
-                @if($destination->tags_array && count($destination->tags_array) > 0)
-                    @foreach($destination->tags_array as $tag)
-                        <span class="tag-item">#{{ $tag }}</span>
-                    @endforeach
-                @else
-                    <span class="tag-item">#{{ ucfirst($category) }}</span>
+                <?php if($destination->tags_array && count($destination->tags_array) > 0): ?>
+                    <?php $__currentLoopData = $destination->tags_array; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $tag): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <span class="tag-item">#<?php echo e($tag); ?></span>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                <?php else: ?>
+                    <span class="tag-item">#<?php echo e(ucfirst($category)); ?></span>
                     <span class="tag-item">#DanauToba</span>
-                @endif
+                <?php endif; ?>
             </div>
         </div>
     </div>
 
-    {{-- Card Bawah: Deskripsi Lengkap --}}
+    
     <div class="desc-card">
-        <h3>{{ app()->getLocale() == 'en' ? 'Full Description' : 'Deskripsi Lengkap' }}</h3>
-        <p>{{ $destination->description_trans }}</p>
+        <h3><?php echo e(app()->getLocale() == 'en' ? 'Full Description' : 'Deskripsi Lengkap'); ?></h3>
+        <p><?php echo e($destination->description_trans); ?></p>
     </div>
 
-    {{-- ==================== FASILITAS & SARANA ==================== --}}
-    @if(isset($fasilitasList) && $fasilitasList->count() > 0)
+    
+    <?php if(isset($fasilitasList) && $fasilitasList->count() > 0): ?>
     <div class="desc-card" style="margin-bottom: 30px;">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
             <h3 style="margin-bottom:0;"><i class="fas fa-concierge-bell" style="color:var(--gold); margin-right:8px;"></i> Fasilitas Sekitar</h3>
-            <a href="{{ url('/fasilitas') }}" style="color:var(--primary); font-size:0.82rem; font-weight:700; text-decoration:none;">Lihat Semua →</a>
+            <a href="<?php echo e(url('/fasilitas')); ?>" style="color:var(--primary); font-size:0.82rem; font-weight:700; text-decoration:none;">Lihat Semua →</a>
         </div>
         <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:16px;">
-            @foreach($fasilitasList as $fas)
+            <?php $__currentLoopData = $fasilitasList; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $fas): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
             <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:14px; overflow:hidden;">
-                <img src="{{ $fas->gambar_url }}" alt="{{ $fas->nama_trans }}" style="width:100%; height:120px; object-fit:cover;" onerror="this.onerror=null; this.src='{{ asset('image/default.jpg') }}'">
+                <img src="<?php echo e($fas->gambar_url); ?>" alt="<?php echo e($fas->nama_trans); ?>" style="width:100%; height:120px; object-fit:cover;" onerror="this.onerror=null; this.src='<?php echo e(asset('image/default.jpg')); ?>'">
                 <div style="padding:12px;">
-                    <h5 style="font-size:0.9rem; font-weight:700; color:var(--primary); margin:0 0 4px;">{{ $fas->nama_trans }}</h5>
-                    <div style="font-size:0.75rem; color:#64748b;"><i class="fas fa-map-marker-alt"></i> {{ Str::limit($fas->lokasi ?: 'Danau Toba', 25) }}</div>
+                    <h5 style="font-size:0.9rem; font-weight:700; color:var(--primary); margin:0 0 4px;"><?php echo e($fas->nama_trans); ?></h5>
+                    <div style="font-size:0.75rem; color:#64748b;"><i class="fas fa-map-marker-alt"></i> <?php echo e(Str::limit($fas->lokasi ?: 'Danau Toba', 25)); ?></div>
                 </div>
             </div>
-            @endforeach
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         </div>
     </div>
-    @endif
+    <?php endif; ?>
 
-    {{-- ==================== SOVENIR & LAPAK UMKM ==================== --}}
-    @if(isset($umkmList) && $umkmList->count() > 0)
+    
+    <?php if(isset($umkmList) && $umkmList->count() > 0): ?>
     <div class="desc-card" style="margin-bottom: 30px;">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
             <h3 style="margin-bottom:0;"><i class="fas fa-shopping-bag" style="color:var(--gold); margin-right:8px;"></i> Sovenir & UMKM Lokal</h3>
-            <a href="{{ route('umkm.index') }}" style="color:var(--primary); font-size:0.82rem; font-weight:700; text-decoration:none;">Lihat Semua →</a>
+            <a href="<?php echo e(route('umkm.index')); ?>" style="color:var(--primary); font-size:0.82rem; font-weight:700; text-decoration:none;">Lihat Semua →</a>
         </div>
         <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:16px;">
-            @foreach($umkmList as $u)
-            @php
+            <?php $__currentLoopData = $umkmList; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $u): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+            <?php
                 $uImg = $u->foto_utama ? asset($u->foto_utama) : asset('image/default.jpg');
-            @endphp
-            <a href="{{ route('fasilitas.umkm.detail', $u->id) }}" style="text-decoration:none; color:inherit; background:#f8fafc; border:1px solid #e2e8f0; border-radius:14px; overflow:hidden; display:block; transition:transform 0.2s;">
-                <img src="{{ $uImg }}" alt="{{ $u->nama_usaha_trans }}" style="width:100%; height:120px; object-fit:cover;" onerror="this.onerror=null; this.src='{{ asset('image/default.jpg') }}'">
+            ?>
+            <a href="<?php echo e(route('fasilitas.umkm.detail', $u->id)); ?>" style="text-decoration:none; color:inherit; background:#f8fafc; border:1px solid #e2e8f0; border-radius:14px; overflow:hidden; display:block; transition:transform 0.2s;">
+                <img src="<?php echo e($uImg); ?>" alt="<?php echo e($u->nama_usaha_trans); ?>" style="width:100%; height:120px; object-fit:cover;" onerror="this.onerror=null; this.src='<?php echo e(asset('image/default.jpg')); ?>'">
                 <div style="padding:12px;">
-                    <h5 style="font-size:0.9rem; font-weight:700; color:var(--primary); margin:0 0 4px;">{{ $u->nama_usaha_trans }}</h5>
-                    <div style="font-size:0.75rem; color:#64748b;"><i class="fas fa-user"></i> {{ $u->pemilik ?: 'Warga Lokal' }}</div>
+                    <h5 style="font-size:0.9rem; font-weight:700; color:var(--primary); margin:0 0 4px;"><?php echo e($u->nama_usaha_trans); ?></h5>
+                    <div style="font-size:0.75rem; color:#64748b;"><i class="fas fa-user"></i> <?php echo e($u->pemilik ?: 'Warga Lokal'); ?></div>
                 </div>
             </a>
-            @endforeach
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         </div>
     </div>
-    @endif
+    <?php endif; ?>
 
-    {{-- ==================== PENGINAPAN SEKITAR ==================== --}}
-    @if(isset($penginapanList) && $penginapanList->count() > 0)
+    
+    <?php if(isset($penginapanList) && $penginapanList->count() > 0): ?>
     <div class="desc-card" style="margin-bottom: 30px;">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
             <h3 style="margin-bottom:0;"><i class="fas fa-hotel" style="color:var(--gold); margin-right:8px;"></i> Penginapan & Homestay Sekitar</h3>
-            <a href="{{ route('penginapan.index') }}" style="color:var(--primary); font-size:0.82rem; font-weight:700; text-decoration:none;">Lihat Semua →</a>
+            <a href="<?php echo e(route('penginapan.index')); ?>" style="color:var(--primary); font-size:0.82rem; font-weight:700; text-decoration:none;">Lihat Semua →</a>
         </div>
         <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:16px;">
-            @foreach($penginapanList as $p)
-            <a href="{{ route('penginapan.detail', $p->id) }}" style="text-decoration:none; color:inherit; background:#f8fafc; border:1px solid #e2e8f0; border-radius:14px; overflow:hidden; display:block; transition:transform 0.2s;">
-                <img src="{{ $p->gambar_url }}" alt="{{ $p->nama_trans }}" style="width:100%; height:120px; object-fit:cover;" onerror="this.onerror=null; this.src='{{ asset('image/default.jpg') }}'">
+            <?php $__currentLoopData = $penginapanList; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $p): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+            <a href="<?php echo e(route('penginapan.detail', $p->id)); ?>" style="text-decoration:none; color:inherit; background:#f8fafc; border:1px solid #e2e8f0; border-radius:14px; overflow:hidden; display:block; transition:transform 0.2s;">
+                <img src="<?php echo e($p->gambar_url); ?>" alt="<?php echo e($p->nama_trans); ?>" style="width:100%; height:120px; object-fit:cover;" onerror="this.onerror=null; this.src='<?php echo e(asset('image/default.jpg')); ?>'">
                 <div style="padding:12px;">
-                    <h5 style="font-size:0.9rem; font-weight:700; color:var(--primary); margin:0 0 4px;">{{ $p->nama_trans }}</h5>
-                    <div style="font-size:0.78rem; font-weight:700; color:#059669;">{{ $p->harga ?: 'Hubungi Pengelola' }}</div>
+                    <h5 style="font-size:0.9rem; font-weight:700; color:var(--primary); margin:0 0 4px;"><?php echo e($p->nama_trans); ?></h5>
+                    <div style="font-size:0.78rem; font-weight:700; color:#059669;"><?php echo e($p->harga ?: 'Hubungi Pengelola'); ?></div>
                 </div>
             </a>
-            @endforeach
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         </div>
     </div>
-    @endif
+    <?php endif; ?>
 
-    {{-- Tombol Kembali --}}
+    
     <div class="action-container">
-        <a href="{{ route('destinasi.' . $category) }}" class="btn-return">
-            <i class="fas fa-arrow-left"></i> {{ app()->getLocale() == 'en' ? 'Back to' : 'Kembali ke Destinasi' }} {{ ucfirst($category) }}
+        <a href="<?php echo e(route('destinasi.' . $category)); ?>" class="btn-return">
+            <i class="fas fa-arrow-left"></i> <?php echo e(app()->getLocale() == 'en' ? 'Back to' : 'Kembali ke Destinasi'); ?> <?php echo e(ucfirst($category)); ?>
+
         </a>
     </div>
 
 </main>
 
-@endsection
+<?php $__env->stopSection(); ?>
 
+
+<?php echo $__env->make('layouts.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\Proyek akhir 1 Real\resources\views/pages/wisata/detail.blade.php ENDPATH**/ ?>

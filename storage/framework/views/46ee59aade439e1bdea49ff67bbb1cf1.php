@@ -1,9 +1,6 @@
-{{-- resources/views/admin/dashboard.blade.php --}}
-@extends('layouts.admin')
+<?php $__env->startSection('title', 'Dashboard'); ?>
 
-@section('title', 'Dashboard')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
 
 <style>
     /* ==================== CORE DECORATIONS ==================== */
@@ -199,53 +196,51 @@
 
 <div class="stats-grid">
     <div class="stat-card">
-        <div class="stat-number">{{ $totalGaleri ?? 0 }}</div>
+        <div class="stat-number"><?php echo e($totalGaleri ?? 0); ?></div>
         <div class="stat-label">Total Galeri</div>
     </div>
     <div class="stat-card">
-        <div class="stat-number">{{ $totalBerita ?? 0 }}</div>
+        <div class="stat-number"><?php echo e($totalBerita ?? 0); ?></div>
         <div class="stat-label">Total Berita</div>
     </div>
     <div class="stat-card">
-        <div class="stat-number">{{ $totalAgenda ?? 0 }}</div>
+        <div class="stat-number"><?php echo e($totalAgenda ?? 0); ?></div>
         <div class="stat-label">Total Agenda</div>
     </div>
     <div class="stat-card">
-        <div class="stat-number">{{ $totalPengumuman ?? 0 }}</div>
+        <div class="stat-number"><?php echo e($totalPengumuman ?? 0); ?></div>
         <div class="stat-label">Total Pengumuman</div>
     </div>
 
     <div class="stat-card">
-        <div class="stat-number">{{ $totalQr ?? 7 }}</div>
-        <div class="stat-label">Titik QR Wisata</div>
-    </div>
-    <div class="stat-card">
-        <div class="stat-number">{{ $totalSejarah ?? 0 }}</div>
+        <div class="stat-number"><?php echo e($totalSejarah ?? 0); ?></div>
         <div class="stat-label">Total Sejarah Wisata</div>
     </div>
     <div class="stat-card">
-        <div class="stat-number">{{ $totalUmkm ?? 0 }}</div>
+        <div class="stat-number"><?php echo e($totalUmkm ?? 0); ?></div>
         <div class="stat-label">Lapak UMKM</div>
     </div>
     <div class="stat-card">
-        <div class="stat-number">{{ $totalFasilitas ?? 0 }}</div>
+        <div class="stat-number"><?php echo e($totalFasilitas ?? 0); ?></div>
         <div class="stat-label">Fasilitas Desa</div>
     </div>
 
     <div class="stat-card">
-        <div class="stat-number">{{ $totalPenginapan ?? 0 }}</div>
+        <div class="stat-number"><?php echo e($totalPenginapan ?? 0); ?></div>
         <div class="stat-label">Penginapan</div>
     </div>
 
     <div class="stat-card">
-        <div class="stat-number">{{ $totalKuliner ?? 0 }}</div>
+        <div class="stat-number"><?php echo e($totalKuliner ?? 0); ?></div>
         <div class="stat-label">Kuliner</div>
     </div>
 
     <div class="stat-card">
-        <div class="stat-number">{{ $totalBiodiversitas ?? 0 }}</div>
+        <div class="stat-number"><?php echo e($totalBiodiversitas ?? 0); ?></div>
         <div class="stat-label">Biodiversitas</div>
     </div>
 </div>
 
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.admin', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\Proyek akhir 1 Real\resources\views/admin/dashboard.blade.php ENDPATH**/ ?>
