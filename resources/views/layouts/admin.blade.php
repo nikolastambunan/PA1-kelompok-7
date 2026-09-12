@@ -381,6 +381,10 @@ h1, h2, h3, h4, h5, h6, .page-title, .section-title, .navbar-brand {
 
         {{-- ========== GROUP DESTINASI ========== --}}
         <div class="menu-title">Destinasi</div>
+        <a href="{{ route('admin.qr-destinasi.index') }}"
+           class="{{ request()->routeIs('admin.qr-destinasi.*') ? 'active' : '' }}">
+            <i class="fas fa-qrcode"></i> QR Wisata (BALG)
+        </a>
         <a href="{{ route('admin.destination.alam.index') }}"
            class="{{ request()->routeIs('admin.destination.alam.*') ? 'active' : '' }}">
             Destinasi Alam

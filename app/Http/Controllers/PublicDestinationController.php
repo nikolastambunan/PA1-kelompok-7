@@ -92,6 +92,43 @@ class PublicDestinationController extends Controller
             ->limit(3)
             ->get();
 
-        return view('pages.wisata.detail', compact('destination', 'related', 'category'));
+        // Cari kode destinasi QR jika ada kecocokan
+        $qrMatch = \App\Models\QrDestination::where('nama', 'like', '%' . $destination->title . '%')
+            ->orWhere('kode', 'like', '%' . $destination->title . '%')
+            ->first();
+        $destCode = $qrMatch?->kode;
+
+        // Ambil data fasilitas spesifik destinasi ini atau fasilitas umum jika belum ada spesifik
+        $fasilitasQuery = \App\Models\Fasilitas::where('status', true);
+        if ($destCode) {
+            $fasilitasSpecific = (clone $fasilitasQuery)->where('destination_code', $destCode)->latest()->limit(6)->get();
+            if ($fasilitasSpecific->count() > 0) {
+                $fasilitasList = $fasilitasSpecific;
+            } else {
+                $fasilitasList = $fasilitasQuery->where(function($q) use ($destCode) {
+                    $q->where('destination_code', $destCode)
+                      ->orWhereNull('destination_code')
+                      ->orWhere('destination_code', '');
+                })->latest()->limit(6)->get();
+            }
+        } else {
+            $fasilitasList = $fasilitasQuery->latest()->limit(6)->get();
+        }
+
+        // Ambil data UMKM, penginapan, kuliner terkait
+        $umkmList = \App\Models\Umkm::where('status', 'aktif')->latest()->limit(4)->get();
+        $penginapanList = \App\Models\Penginapan::where('status', 1)->latest()->limit(4)->get();
+        $kulinerList = \App\Models\Kuliner::where('status', true)->latest()->limit(4)->get();
+
+        return view('pages.wisata.detail', compact(
+            'destination', 
+            'related', 
+            'category', 
+            'umkmList', 
+            'fasilitasList', 
+            'penginapanList', 
+            'kulinerList',
+            'destCode'
+        ));
     }
 }

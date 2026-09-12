@@ -15,19 +15,21 @@ class AdminFasilitasController extends Controller
         return view('admin.fasilitas.index', compact('data'));
     }
 
-   public function create()
+    public function create()
     {
-    $jenisList = [
-        'akomodasi',
-        'kuliner',
-        'pusat informasi',
-        'toilet',
-        'parkir',
-        'akses jalan',
-        'pemandu lokal'
-    ];
+        $jenisList = [
+            'akomodasi',
+            'kuliner',
+            'pusat informasi',
+            'toilet',
+            'parkir',
+            'akses jalan',
+            'pemandu lokal'
+        ];
 
-    return view('admin.fasilitas.create', compact('jenisList'));
+        $destinations = \App\Models\QrDestination::orderBy('kode', 'asc')->get();
+
+        return view('admin.fasilitas.create', compact('jenisList', 'destinations'));
     }
 
     public function store(Request $request)
@@ -35,6 +37,7 @@ class AdminFasilitasController extends Controller
         $request->validate([
             'nama' => 'required|string|max:255',
             'jenis' => 'required|string|max:100',
+            'destination_code' => 'nullable|string|max:50',
             'deskripsi' => 'required|string',
             'harga' => 'nullable|string|max:100',
             'lokasi' => 'nullable|string|max:255',
@@ -48,6 +51,7 @@ class AdminFasilitasController extends Controller
             'nama' => $request->nama,
             'nama_en' => \App\Helpers\TranslateHelper::translateToEnglish($request->nama),
             'jenis' => $request->jenis,
+            'destination_code' => $request->destination_code,
             'deskripsi' => $request->deskripsi,
             'deskripsi_en' => \App\Helpers\TranslateHelper::translateToEnglish($request->deskripsi),
             'harga' => $request->harga,
@@ -78,19 +82,21 @@ class AdminFasilitasController extends Controller
 
     public function edit($id)
     {
-    $data = Fasilitas::findOrFail($id);
+        $data = Fasilitas::findOrFail($id);
 
-    $jenisList = [
-        'akomodasi',
-        'kuliner',
-        'pusat informasi',
-        'toilet',
-        'parkir',
-        'akses jalan',
-        'pemandu lokal'
-    ];
+        $jenisList = [
+            'akomodasi',
+            'kuliner',
+            'pusat informasi',
+            'toilet',
+            'parkir',
+            'akses jalan',
+            'pemandu lokal'
+        ];
 
-    return view('admin.fasilitas.edit', compact('data', 'jenisList'));
+        $destinations = \App\Models\QrDestination::orderBy('kode', 'asc')->get();
+
+        return view('admin.fasilitas.edit', compact('data', 'jenisList', 'destinations'));
     }
 
     public function update(Request $request, $id)
@@ -100,6 +106,7 @@ class AdminFasilitasController extends Controller
         $request->validate([
             'nama' => 'required|string|max:255',
             'jenis' => 'required|string|max:100',
+            'destination_code' => 'nullable|string|max:50',
             'deskripsi' => 'required|string',
             'harga' => 'nullable|string|max:100',
             'lokasi' => 'nullable|string|max:255',
@@ -113,6 +120,7 @@ class AdminFasilitasController extends Controller
             'nama' => $request->nama,
             'nama_en' => \App\Helpers\TranslateHelper::translateToEnglish($request->nama),
             'jenis' => $request->jenis,
+            'destination_code' => $request->destination_code,
             'deskripsi' => $request->deskripsi,
             'deskripsi_en' => \App\Helpers\TranslateHelper::translateToEnglish($request->deskripsi),
             'harga' => $request->harga,

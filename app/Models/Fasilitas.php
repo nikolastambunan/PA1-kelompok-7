@@ -15,6 +15,7 @@ class Fasilitas extends Model
         'nama',
         'nama_en',          // [BARU] Nama fasilitas versi Inggris
         'jenis',
+        'destination_code', // [BARU] Pilihan destinasi (BALG-001 s/d BALG-007)
         'deskripsi',
         'deskripsi_en',     // [BARU] Deskripsi fasilitas versi Inggris
         'harga',

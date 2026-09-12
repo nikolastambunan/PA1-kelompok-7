@@ -216,6 +216,10 @@
     </div>
 
     <div class="stat-card">
+        <div class="stat-number">{{ $totalQr ?? 7 }}</div>
+        <div class="stat-label">Titik QR Wisata</div>
+    </div>
+    <div class="stat-card">
         <div class="stat-number">{{ $totalSejarah ?? 0 }}</div>
         <div class="stat-label">Total Sejarah Wisata</div>
     </div>
